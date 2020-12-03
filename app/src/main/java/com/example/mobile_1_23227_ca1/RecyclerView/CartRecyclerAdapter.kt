@@ -20,7 +20,11 @@ class CartRecyclerAdapter(private val allCart: MutableList<Cart_Entity>) :
         //Binds database info to textviews in order to display them.
         holder.itemView.name.text = allCart[position].cart_item_name
         holder.itemView.price.text = allCart[position].cart_item_price.toString() + " €"
-        holder.itemView.number.text = allCart[position].cart_item_number.toString() + " bags"
+        if(allCart[position].cart_item_number == 1){
+            holder.itemView.number.text = allCart[position].cart_item_number.toString() + " bag"
+        } else {
+            holder.itemView.number.text = allCart[position].cart_item_number.toString() + " bags"
+        }
     }
 
     class CartViewHolder (view: View): RecyclerView.ViewHolder(view){}
