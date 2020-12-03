@@ -1,56 +1,50 @@
 package com.example.mobile_1_23227_ca1
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Adapter
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.recyclerview.widget.ItemTouchHelper
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.example.mobile_1_23227_ca1.Database.AppDb
+import com.example.mobile_1_23227_ca1.Database.Cart_Entity
+import com.example.mobile_1_23227_ca1.RecyclerView.CartRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_cart.*
 
 class CartActivity : AppCompatActivity() {
 
-    private lateinit var cartAdapter: CartRecyclerAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-/*
-        val cartInfo: String? = intent.getStringExtra("shared")
-        val textview = findViewById<TextView>(R.id.CartInfo)
-        //todoItems?.forEach{ currentTodoItem -> textview.text ="$currentTodoItem" }
-        textview.text = cartInfo*/
-
-        val item=object:SwipeToDelete(this,0,ItemTouchHelper.RIGHT){
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                cartAdapter.del(viewHolder.adapterPosition)
-            }
-        }
-
-        val itemTouchHelper=ItemTouchHelper(item)
-        itemTouchHelper.attachToRecyclerView(recycler_view)
-
-        initRecyclerView()
-        addDataSet()
-    }
-
-    private fun addDataSet(){
-        val data = DataSource.createDataSet()
-        cartAdapter.submitList(data)
-    }
-
-    private fun initRecyclerView() {
-        recycler_view.apply {
+        val db = Room.databaseBuilder(
+            this, AppDb::class.java, "CartDb"
+        ).allowMainThreadQueries()
+            .build()
+        val allCart = db.cartDao().getAllCart()
+        cartRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@CartActivity)
-            cartAdapter = CartRecyclerAdapter()
-            adapter = cartAdapter
+            adapter = CartRecyclerAdapter(allCart as MutableList<Cart_Entity>)
+
+        }
+
+        total.text = "Total : " + db.cartDao().getTotalPrice().toString() + " €"
+
+        clear.setOnClickListener{
+            db.cartDao().deleteAll()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        pay.setOnClickListener{
+            db.cartDao().deleteAll()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
-
-
-
+    fun goBack(view: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }
 
