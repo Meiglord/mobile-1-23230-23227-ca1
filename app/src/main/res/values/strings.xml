@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">Mobile-1-23227-ca1</string>
     <string name="MainActivityLaunchMessage">Main Activity Has Started</string>
-    <string name="ButtonClicked">The button has been clicked</string>
-    <string name="PrefsPackage">com.example.mobile_1_23227_ca1</string>
-    <string name="ToDoItemStrings">ToDoItemStrings</string>
-    <string name="SAVED_MESSAGE">Preferences are saved</string>
     <string name="BagsWanted">How much bags do you want ?</string>
-    <string name="Darjelling">darjelling</string>
-    <string name="title">test</string>
-    <string name="description">test</string>
+    <string name="DeliveryCharge">Delivery charge</string>
+    <string name="Darjelling">Darjelling</string>
+    <string name="Assam">Assam</string>
+    <string name="Earl">Earl Grey</string>
+    <string name="Irish">Irish Breakfast</string>
+    <string name="Lapsang">Lapsang</string>
 
 </resources>
